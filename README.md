@@ -1,36 +1,179 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ControlAcess - Sistema de Controle de Acesso
 
-## Getting Started
+Uma plataforma cloud-first, modular e escalável para controle inteligente e seguro de acessos físicos e digitais.
 
-First, run the development server:
+## 🚀 Características
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Arquitetura Moderna**: Next.js 15+ com App Router, React 18, TailwindCSS
+- **Interface Responsiva**: Design moderno e intuitivo
+- **Módulos Principais**:
+  - Dashboard em tempo real
+  - Gestão de usuários e perfis
+  - Controle de dispositivos
+  - Relatórios e compliance
+  - Sistema de autenticação
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Frontend**: Next.js 15, React 18, TypeScript
+- **Styling**: TailwindCSS, shadcn/ui
+- **Ícones**: Lucide React
+- **Componentes**: shadcn/ui (Radix UI)
+
+## 📋 Pré-requisitos
+
+- Node.js 18+ 
+- npm ou yarn
+
+## 🔧 Instalação
+
+1. **Clone o repositório**
+   ```bash
+   git clone <url-do-repositorio>
+   cd controlacess
+   ```
+
+2. **Instale as dependências**
+   ```bash
+   npm install
+   ```
+
+3. **Execute o servidor de desenvolvimento**
+   ```bash
+   npm run dev
+   ```
+
+4. **Acesse a aplicação**
+   ```
+   http://localhost:3000
+   ```
+
+## 🔑 Credenciais de Demonstração
+
+Para acessar o sistema de demonstração, use:
+
+- **Email**: admin@controlacess.com
+- **Senha**: admin123
+
+## 📁 Estrutura do Projeto
+
+```
+controlacess/
+├── app/                    # Páginas do Next.js (App Router)
+│   ├── dashboard/         # Dashboard principal
+│   ├── usuarios/          # Gestão de usuários
+│   ├── dispositivos/      # Controle de dispositivos
+│   ├── relatorios/        # Relatórios e analytics
+│   └── login/            # Página de autenticação
+├── components/            # Componentes reutilizáveis
+│   ├── ui/               # Componentes base (shadcn/ui)
+│   ├── DashboardLayout.tsx
+│   ├── Sidebar.tsx
+│   └── Navbar.tsx
+├── lib/                  # Utilitários e configurações
+└── public/              # Arquivos estáticos
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Funcionalidades Implementadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🔐 Autenticação
+- Login com validação
+- Armazenamento de token no localStorage
+- Redirecionamento automático
+- Proteção de rotas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📊 Dashboard
+- Cards com estatísticas em tempo real
+- Monitoramento de usuários ativos
+- Alertas e notificações
+- Status dos dispositivos
+- Histórico de acessos recentes
 
-## Learn More
+### 👥 Gestão de Usuários
+- Lista completa de usuários
+- Filtros e busca
+- Níveis de acesso (Alto, Médio, Baixo)
+- Status por departamento
+- Controles de ações
 
-To learn more about Next.js, take a look at the following resources:
+### 🖥️ Controle de Dispositivos
+- Monitoramento de catracas e leitores
+- Status online/offline/warning
+- Informações de firmware
+- Contadores de acesso
+- Localização dos dispositivos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📈 Relatórios
+- Histórico de relatórios gerados
+- Diferentes tipos (Acessos, Segurança, Presença, Dispositivos)
+- Gráficos de acesso por horário
+- Relatórios rápidos predefinidos
+- Conformidade LGPD
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎨 Design System
 
-## Deploy on Vercel
+O projeto utiliza uma paleta de cores consistente:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Primária**: Azul (#3B82F6)
+- **Sucesso**: Verde (#10B981)
+- **Aviso**: Amarelo (#F59E0B)
+- **Erro**: Vermelho (#EF4444)
+- **Neutro**: Cinza (#6B7280)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📱 Responsividade
+
+A interface é completamente responsiva e otimizada para:
+- 📱 Mobile (320px+)
+- 📱 Tablet (768px+)
+- 💻 Desktop (1024px+)
+- 🖥️ Large Desktop (1440px+)
+
+## 🔒 Segurança
+
+- Autenticação baseada em token
+- Proteção de rotas client-side
+- Validação de formulários
+- Sanitização de dados de entrada
+
+## 🚀 Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+npm run dev
+
+# Build para produção
+npm run build
+
+# Iniciar em produção
+npm run start
+
+# Linting
+npm run lint
+```
+
+## 🌟 Próximos Passos
+
+- [ ] Integração com API backend real
+- [ ] Implementação de WebSocket para dados em tempo real
+- [ ] Sistema de notificações push
+- [ ] Modo escuro/claro
+- [ ] Testes automatizados
+- [ ] PWA (Progressive Web App)
+- [ ] Integração com Active Directory
+- [ ] Relatórios em PDF
+- [ ] Dashboard customizável
+
+## 📞 Suporte
+
+Para dúvidas e suporte:
+- 📧 Email: suporte@controlacess.com
+- 📱 WhatsApp: (11) 99999-9999
+- 🌐 Site: www.controlacess.com
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+**ControlAcess** - Controle Inteligente e Seguro de Acessos 🛡️
