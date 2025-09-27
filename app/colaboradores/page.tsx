@@ -18,8 +18,8 @@ import {
   User
 } from 'lucide-react'
 
-// Mock data para usuários
-const mockUsers = [
+// Mock data para colaboradores
+const mockColaboradores = [
   {
     id: 1,
     name: 'João Silva',
@@ -72,18 +72,18 @@ const mockUsers = [
   }
 ]
 
-export default function UsuariosPage() {
+export default function ColaboradoresPage() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredUsers, setFilteredUsers] = useState(mockUsers)
+  const [filteredColaboradores, setFilteredColaboradores] = useState(mockColaboradores)
 
   const handleSearch = (term: string) => {
     setSearchTerm(term)
-    const filtered = mockUsers.filter(user =>
-      user.name.toLowerCase().includes(term.toLowerCase()) ||
-      user.email.toLowerCase().includes(term.toLowerCase()) ||
-      user.department.toLowerCase().includes(term.toLowerCase())
+    const filtered = mockColaboradores.filter(colaborador =>
+      colaborador.name.toLowerCase().includes(term.toLowerCase()) ||
+      colaborador.email.toLowerCase().includes(term.toLowerCase()) ||
+      colaborador.department.toLowerCase().includes(term.toLowerCase())
     )
-    setFilteredUsers(filtered)
+    setFilteredColaboradores(filtered)
   }
 
   const getAccessLevelIcon = (level: string) => {
@@ -116,12 +116,12 @@ export default function UsuariosPage() {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Usuários</h1>
-            <p className="text-gray-600">Gerencie usuários e suas permissões de acesso</p>
+            <h1 className="text-2xl font-bold text-gray-900">Colaboradores</h1>
+            <p className="text-gray-600">Gerencie colaboradores e suas permissões de acesso</p>
           </div>
           <Button className="flex items-center gap-2">
             <UserPlus className="h-4 w-4" />
-            Novo Usuário
+            Novo Colaborador
           </Button>
         </div>
 
@@ -129,20 +129,20 @@ export default function UsuariosPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total de Usuários</CardTitle>
+              <CardTitle className="text-sm font-medium">Total de Colaboradores</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{mockUsers.length}</div>
+              <div className="text-2xl font-bold">{mockColaboradores.length}</div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Usuários Ativos</CardTitle>
+              <CardTitle className="text-sm font-medium">Colaboradores Ativos</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-green-600">
-                {mockUsers.filter(u => u.status === 'Ativo').length}
+                {mockColaboradores.filter(c => c.status === 'Ativo').length}
               </div>
             </CardContent>
           </Card>
@@ -153,7 +153,7 @@ export default function UsuariosPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-red-600">
-                {mockUsers.filter(u => u.accessLevel === 'Alto').length}
+                {mockColaboradores.filter(c => c.accessLevel === 'Alto').length}
               </div>
             </CardContent>
           </Card>
@@ -164,7 +164,7 @@ export default function UsuariosPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {new Set(mockUsers.map(u => u.department)).size}
+                {new Set(mockColaboradores.map(c => c.department)).size}
               </div>
             </CardContent>
           </Card>
@@ -173,15 +173,15 @@ export default function UsuariosPage() {
         {/* Filtros e busca */}
         <Card>
           <CardHeader>
-            <CardTitle>Lista de Usuários</CardTitle>
-            <CardDescription>Visualize e gerencie todos os usuários do sistema</CardDescription>
+            <CardTitle>Lista de Colaboradores</CardTitle>
+            <CardDescription>Visualize e gerencie todos os colaboradores do sistema</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
-                  placeholder="Buscar usuários..."
+                  placeholder="Buscar colaboradores..."
                   value={searchTerm}
                   onChange={(e) => handleSearch(e.target.value)}
                   className="pl-10"
@@ -197,7 +197,7 @@ export default function UsuariosPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Usuário</TableHead>
+                    <TableHead>Colaborador</TableHead>
                     <TableHead>Departamento</TableHead>
                     <TableHead>Função</TableHead>
                     <TableHead>Nível de Acesso</TableHead>
@@ -207,27 +207,27 @@ export default function UsuariosPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredUsers.map((user) => (
-                    <TableRow key={user.id}>
+                  {filteredColaboradores.map((colaborador) => (
+                    <TableRow key={colaborador.id}>
                       <TableCell>
                         <div>
-                          <div className="font-medium">{user.name}</div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
+                          <div className="font-medium">{colaborador.name}</div>
+                          <div className="text-sm text-gray-500">{colaborador.email}</div>
                         </div>
                       </TableCell>
-                      <TableCell>{user.department}</TableCell>
-                      <TableCell>{user.role}</TableCell>
+                      <TableCell>{colaborador.department}</TableCell>
+                      <TableCell>{colaborador.role}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          {getAccessLevelIcon(user.accessLevel)}
-                          <span className="text-sm">{user.accessLevel}</span>
+                          {getAccessLevelIcon(colaborador.accessLevel)}
+                          <span className="text-sm">{colaborador.accessLevel}</span>
                         </div>
                       </TableCell>
                       <TableCell>
-                        {getStatusBadge(user.status)}
+                        {getStatusBadge(colaborador.status)}
                       </TableCell>
                       <TableCell className="text-sm text-gray-500">
-                        {user.lastAccess}
+                        {colaborador.lastAccess}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">

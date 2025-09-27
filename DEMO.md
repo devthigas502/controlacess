@@ -20,17 +20,31 @@ npm run dev
 
 #### 🏠 **Dashboard Principal**
 - Visualize estatísticas em tempo real
-- 1.247 usuários totais, 342 pessoas no local
+- 1.247 colaboradores totais, 342 pessoas no local
 - 3 alertas ativos, 89 acessos hoje
 - Acompanhe acessos recentes e alertas
 - Monitore status dos dispositivos em grid
 
-#### 👥 **Gestão de Usuários**
-- Acesse via menu lateral: "Usuários"
-- Visualize lista completa com 5 usuários de exemplo
+#### 👥 **Gestão de Colaboradores**
+- Acesse via menu lateral: "Colaboradores"
+- Visualize lista completa com 5 colaboradores de exemplo
 - Teste a busca digitando nomes como "João" ou "Maria"
 - Observe diferentes níveis de acesso (Alto/Médio/Baixo)
 - Veja status por departamento (TI, RH, Financeiro, etc.)
+
+#### 👤 **Controle de Visitantes**
+- Acesse via menu lateral: "Visitantes"
+- Registre visitantes com dados completos
+- Controle entrada/saída em tempo real
+- Veja histórico de visitas por empresa
+- Monitore crachás ativos no momento
+
+#### 🏢 **Gestão de Prestadores**
+- Acesse via menu lateral: "Prestadores"
+- Gerencie prestadores por empresa e serviço
+- Controle períodos de contrato
+- Defina níveis de acesso apropriados
+- Supervisão por responsável designado
 
 #### 🖥️ **Controle de Dispositivos**
 - Acesse via menu lateral: "Dispositivos"  
@@ -51,7 +65,7 @@ npm run dev
 #### 🔍 **Busca e Filtros**
 - Teste a busca em todas as seções
 - Use a barra de busca no navbar superior
-- Filtre usuários por nome, email ou departamento
+- Filtre colaboradores por nome, email ou departamento
 - Busque dispositivos por nome, localização ou tipo
 
 #### 📱 **Responsividade**
@@ -69,17 +83,30 @@ npm run dev
 ### 5. **Dados de Demonstração**
 
 #### 📊 **Estatísticas do Dashboard**
-- **Usuários Totais**: 1.247 (+12% mês passado)
+- **Colaboradores Totais**: 1.247 (+12% mês passado)
 - **Pessoas no Local**: 342 (68% capacidade)  
 - **Alertas Ativos**: 3 (2 críticos, 1 moderado)
 - **Acessos Hoje**: 89 (último há 5 min)
 
-#### 👤 **Usuários de Exemplo**
+#### 👤 **Colaboradores de Exemplo**
 1. **João Silva** - TI/Administrador - Acesso Alto
 2. **Maria Santos** - RH/Gerente - Acesso Médio  
 3. **Pedro Costa** - Financeiro/Analista - Acesso Baixo (Inativo)
 4. **Ana Oliveira** - Marketing/Coordenadora - Acesso Médio
 5. **Carlos Lima** - Operações/Supervisor - Acesso Alto
+
+#### 🏢 **Visitantes de Exemplo**
+1. **Carlos Mendes** - Tech Solutions - Reunião de Negócios (Presente)
+2. **Ana Paula** - Consultoria XYZ - Auditoria (Saiu)
+3. **Roberto Lima** - Parceiro ABC - Entrega (Saiu)
+4. **Fernanda Oliveira** - Cliente Importante - Apresentação (Presente)
+
+#### 🔧 **Prestadores de Exemplo**
+1. **José da Silva** - Manutenção Técnica - Elétrica (Permanente/Ativo)
+2. **Maria Fernandes** - Limpeza Profissional - Limpeza (Diário/Ativo)
+3. **Carlos Oliveira** - Jardinagem Verde - Jardins (Semanal/Ativo)
+4. **Ana Costa** - TI Solutions - Suporte (Temporário/Inativo)
+5. **Roberto Santos** - Segurança 24h - Segurança (Permanente/Ativo)
 
 #### 🔧 **Dispositivos de Exemplo**
 1. **Catraca Principal** - Online (1.245 acessos)

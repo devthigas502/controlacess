@@ -8,7 +8,9 @@ Uma plataforma cloud-first, modular e escalável para controle inteligente e seg
 - **Interface Responsiva**: Design moderno e intuitivo
 - **Módulos Principais**:
   - Dashboard em tempo real
-  - Gestão de usuários e perfis
+  - Gestão de colaboradores e perfis
+  - Controle de visitantes
+  - Gestão de prestadores de serviço
   - Controle de dispositivos
   - Relatórios e compliance
   - Sistema de autenticação
@@ -61,7 +63,9 @@ Para acessar o sistema de demonstração, use:
 controlacess/
 ├── app/                    # Páginas do Next.js (App Router)
 │   ├── dashboard/         # Dashboard principal
-│   ├── usuarios/          # Gestão de usuários
+│   ├── colaboradores/          # Gestão de colaboradores
+│   ├── visitantes/        # Controle de visitantes
+│   ├── prestadores/       # Gestão de prestadores
 │   ├── dispositivos/      # Controle de dispositivos
 │   ├── relatorios/        # Relatórios e analytics
 │   └── login/            # Página de autenticação
@@ -84,17 +88,31 @@ controlacess/
 
 ### 📊 Dashboard
 - Cards com estatísticas em tempo real
-- Monitoramento de usuários ativos
+- Monitoramento de colaboradores ativos
 - Alertas e notificações
 - Status dos dispositivos
 - Histórico de acessos recentes
 
-### 👥 Gestão de Usuários
-- Lista completa de usuários
+### 👥 Gestão de Colaboradores
+- Lista completa de colaboradores
 - Filtros e busca
 - Níveis de acesso (Alto, Médio, Baixo)
 - Status por departamento
 - Controles de ações
+
+### 👤 Controle de Visitantes
+- Registro de visitantes
+- Controle de entrada e saída
+- Emissão de crachás temporários
+- Histórico de visitas
+- Acompanhamento por anfitrião
+
+### 🏢 Gestão de Prestadores
+- Cadastro de prestadores de serviço
+- Controle de contratos e períodos
+- Níveis de acesso diferenciados
+- Supervisão por responsável
+- Gestão de empresas parceiras
 
 ### 🖥️ Controle de Dispositivos
 - Monitoramento de catracas e leitores

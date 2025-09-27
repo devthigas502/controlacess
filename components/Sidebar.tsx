@@ -10,7 +10,9 @@ import {
   LayoutDashboard, 
   LogOut,
   Shield,
-  Settings
+  Settings,
+  UserCheck,
+  Briefcase
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -20,7 +22,9 @@ interface SidebarProps {
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Usuários', href: '/usuarios', icon: Users },
+  { name: 'Colaboradores', href: '/colaboradores', icon: Users },
+  { name: 'Visitantes', href: '/visitantes', icon: UserCheck },
+  { name: 'Prestadores', href: '/prestadores', icon: Briefcase },
   { name: 'Dispositivos', href: '/dispositivos', icon: Monitor },
   { name: 'Relatórios', href: '/relatorios', icon: FileText },
   { name: 'Configurações', href: '/configuracoes', icon: Settings },
