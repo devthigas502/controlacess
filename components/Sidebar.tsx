@@ -12,12 +12,14 @@ import {
   Shield,
   Settings,
   UserCheck,
-  Briefcase
+  Briefcase,
+  X
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface SidebarProps {
   className?: string
+  onClose?: () => void
 }
 
 const navigation = [
@@ -30,7 +32,7 @@ const navigation = [
   { name: 'Configurações', href: '/configuracoes', icon: Settings },
 ]
 
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ className, onClose }: SidebarProps) {
   const pathname = usePathname()
 
   const handleLogout = () => {
@@ -39,12 +41,22 @@ export function Sidebar({ className }: SidebarProps) {
   }
 
   return (
-    <div className={cn("pb-12 w-64 bg-white border-r border-gray-200", className)}>
-      <div className="space-y-4 py-4">
+    <div className={cn("pb-12 w-64 bg-white border-r border-gray-200 flex flex-col h-full", className)}>
+      <div className="space-y-4 py-4 flex-1">
         <div className="px-3 py-2">
-          <div className="flex items-center space-x-2 mb-8">
-            <Shield className="h-8 w-8 text-blue-600" />
-            <h2 className="text-xl font-bold text-gray-900">ControlAcess</h2>
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center space-x-2">
+              <Shield className="h-8 w-8 text-blue-600" />
+              <h2 className="text-xl font-bold text-gray-900">ControlAcess</h2>
+            </div>
+            {onClose && (
+              <button
+                className="lg:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                onClick={onClose}
+              >
+                <X className="h-6 w-6" />
+              </button>
+            )}
           </div>
           <div className="space-y-1">
             {navigation.map((item) => {
@@ -59,6 +71,7 @@ export function Sidebar({ className }: SidebarProps) {
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                     'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                   )}
+                  onClick={onClose} // Fecha o menu ao clicar em um link (mobile)
                 >
                   <item.icon
                     className={cn(
@@ -73,7 +86,7 @@ export function Sidebar({ className }: SidebarProps) {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 w-64 p-4">
+      <div className="p-4 border-t border-gray-200">
         <button
           onClick={handleLogout}
           className="group flex w-full items-center px-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-gray-900"

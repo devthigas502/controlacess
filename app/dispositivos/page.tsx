@@ -243,62 +243,74 @@ export default function DispositivosPage() {
               </Button>
             </div>
 
-            <div className="border rounded-lg">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Dispositivo</TableHead>
-                    <TableHead>Localização</TableHead>
-                    <TableHead>IP</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Firmware</TableHead>
-                    <TableHead>Acessos</TableHead>
-                    <TableHead>Último Sinal</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
+            <div className="border rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[200px]">Dispositivo</TableHead>
+                      <TableHead className="hidden sm:table-cell">Localização</TableHead>
+                      <TableHead className="hidden md:table-cell">IP</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="hidden lg:table-cell">Firmware</TableHead>
+                      <TableHead className="hidden xl:table-cell">Acessos</TableHead>
+                      <TableHead className="hidden xl:table-cell">Último Sinal</TableHead>
+                      <TableHead className="w-[80px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
                 <TableBody>
                   {filteredDevices.map((device) => (
                     <TableRow key={device.id}>
-                      <TableCell>
+                      <TableCell className="min-w-[200px]">
                         <div className="flex items-center gap-3">
                           {getDeviceIcon(device.type)}
-                          <div>
-                            <div className="font-medium">{device.name}</div>
+                          <div className="min-w-0 flex-1">
+                            <div className="font-medium truncate">{device.name}</div>
                             <div className="text-sm text-gray-500">{device.type}</div>
+                            <div className="sm:hidden mt-1">
+                              <div className="text-xs text-gray-400 truncate">{device.location}</div>
+                              <div className="md:hidden font-mono text-xs text-gray-400 mt-1">{device.ipAddress}</div>
+                              <div className="lg:hidden font-mono text-xs text-gray-400 mt-1">v{device.firmware}</div>
+                              <div className="xl:hidden text-xs text-gray-400 mt-1">
+                                {device.accessCount.toLocaleString()} acessos
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell>{device.location}</TableCell>
-                      <TableCell className="font-mono text-sm">{device.ipAddress}</TableCell>
+                      <TableCell className="hidden sm:table-cell truncate max-w-[150px]">{device.location}</TableCell>
+                      <TableCell className="hidden md:table-cell font-mono text-sm">{device.ipAddress}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
                           {getStatusIcon(device.status)}
-                          {getStatusBadge(device.status)}
+                          <div className="hidden sm:block">
+                            {getStatusBadge(device.status)}
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell className="font-mono text-sm">{device.firmware}</TableCell>
-                      <TableCell>{device.accessCount.toLocaleString()}</TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="hidden lg:table-cell font-mono text-sm">{device.firmware}</TableCell>
+                      <TableCell className="hidden xl:table-cell">{device.accessCount.toLocaleString()}</TableCell>
+                      <TableCell className="hidden xl:table-cell text-sm text-gray-500">
                         {device.lastSeen}
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="sm">
+                        <div className="flex items-center gap-1">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <Settings className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hidden sm:inline-flex">
                             <Power className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
-              </Table>
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </CardContent>
         </Card>

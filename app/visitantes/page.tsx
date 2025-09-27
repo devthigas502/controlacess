@@ -172,63 +172,78 @@ export default function VisitantesPage() {
               </Button>
             </div>
 
-            <div className="border rounded-lg">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Visitante</TableHead>
-                    <TableHead>Empresa</TableHead>
-                    <TableHead>Motivo</TableHead>
-                    <TableHead>Acompanhante</TableHead>
-                    <TableHead>Entrada</TableHead>
-                    <TableHead>Saída</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
+            <div className="border rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[200px]">Visitante</TableHead>
+                      <TableHead className="hidden sm:table-cell">Empresa</TableHead>
+                      <TableHead className="hidden md:table-cell">Motivo</TableHead>
+                      <TableHead className="hidden lg:table-cell">Acompanhante</TableHead>
+                      <TableHead className="hidden xl:table-cell">Entrada</TableHead>
+                      <TableHead className="hidden xl:table-cell">Saída</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="w-[80px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
                 <TableBody>
                   {filteredVisitantes.map((visitante) => (
                     <TableRow key={visitante.id}>
-                      <TableCell>
+                      <TableCell className="min-w-[200px]">
                         <div>
                           <div className="font-medium">{visitante.name}</div>
                           <div className="text-sm text-gray-500">Crachá: {visitante.badgeNumber}</div>
+                          <div className="sm:hidden mt-1">
+                            <div className="flex items-center gap-1 text-xs text-gray-400">
+                              <Building className="h-3 w-3" />
+                              <span className="truncate">{visitante.company}</span>
+                            </div>
+                            <div className="text-xs text-gray-400 mt-1 truncate">
+                              {visitante.purpose} • {visitante.host}
+                            </div>
+                            <div className="xl:hidden text-xs text-gray-400 mt-1">
+                              Entrada: {visitante.entryTime}
+                              {visitante.exitTime && ` • Saída: ${visitante.exitTime}`}
+                            </div>
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="hidden sm:table-cell">
                         <div className="flex items-center gap-2">
-                          <Building className="h-4 w-4 text-gray-400" />
-                          <span>{visitante.company}</span>
+                          <Building className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                          <span className="truncate">{visitante.company}</span>
                         </div>
                       </TableCell>
-                      <TableCell>{visitante.purpose}</TableCell>
-                      <TableCell>{visitante.host}</TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="hidden md:table-cell truncate max-w-[150px]">{visitante.purpose}</TableCell>
+                      <TableCell className="hidden lg:table-cell">{visitante.host}</TableCell>
+                      <TableCell className="hidden xl:table-cell text-sm text-gray-500">
                         {visitante.entryTime}
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="hidden xl:table-cell text-sm text-gray-500">
                         {visitante.exitTime || '-'}
                       </TableCell>
                       <TableCell>
                         {getStatusBadge(visitante.status)}
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="sm">
+                        <div className="flex items-center gap-1">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hidden sm:inline-flex">
                             <Trash2 className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
-              </Table>
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </CardContent>
         </Card>

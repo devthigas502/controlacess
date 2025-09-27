@@ -198,21 +198,21 @@ export default function RelatoriosPage() {
             <CardContent>
               <div className="space-y-3">
                 {accessData.map((data) => (
-                  <div key={data.hour} className="flex items-center justify-between">
+                  <div key={data.hour} className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
                     <div className="flex items-center space-x-3">
-                      <span className="text-sm font-medium w-12">{data.hour}</span>
-                      <div className="flex space-x-2">
+                      <span className="text-sm font-medium w-12 flex-shrink-0">{data.hour}</span>
+                      <div className="flex flex-wrap gap-2">
                         <div className="flex items-center space-x-1">
-                          <div className="w-3 h-3 bg-green-500 rounded"></div>
-                          <span className="text-xs text-green-600">Entradas: {data.entries}</span>
+                          <div className="w-3 h-3 bg-green-500 rounded flex-shrink-0"></div>
+                          <span className="text-xs text-green-600 whitespace-nowrap">Entradas: {data.entries}</span>
                         </div>
                         <div className="flex items-center space-x-1">
-                          <div className="w-3 h-3 bg-red-500 rounded"></div>
-                          <span className="text-xs text-red-600">Saídas: {data.exits}</span>
+                          <div className="w-3 h-3 bg-red-500 rounded flex-shrink-0"></div>
+                          <span className="text-xs text-red-600 whitespace-nowrap">Saídas: {data.exits}</span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex space-x-1">
+                    <div className="flex space-x-1 ml-15 sm:ml-0">
                       <div 
                         className="bg-green-200 h-4 rounded"
                         style={{ width: `${Math.max(data.entries / 5, 2)}px` }}
@@ -242,19 +242,20 @@ export default function RelatoriosPage() {
                   { name: 'Alertas de Segurança', description: 'Incidentes das últimas 24h', icon: <Shield className="h-4 w-4" /> },
                   { name: 'Status dos Dispositivos', description: 'Relatório de conectividade', icon: <AlertTriangle className="h-4 w-4" /> }
                 ].map((report, index) => (
-                  <div key={index} className="flex items-center justify-between border rounded-lg p-3 hover:bg-gray-50">
-                    <div className="flex items-center space-x-3">
-                      <div className="text-gray-500">
+                  <div key={index} className="flex flex-col sm:flex-row sm:items-center justify-between border rounded-lg p-3 hover:bg-gray-50 space-y-2 sm:space-y-0">
+                    <div className="flex items-center space-x-3 min-w-0 flex-1">
+                      <div className="text-gray-500 flex-shrink-0">
                         {report.icon}
                       </div>
-                      <div>
-                        <p className="text-sm font-medium">{report.name}</p>
-                        <p className="text-xs text-gray-500">{report.description}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium truncate">{report.name}</p>
+                        <p className="text-xs text-gray-500 truncate">{report.description}</p>
                       </div>
                     </div>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" className="w-full sm:w-auto flex-shrink-0">
                       <Download className="h-3 w-3 mr-1" />
-                      Gerar
+                      <span className="hidden sm:inline">Gerar</span>
+                      <span className="sm:hidden">Gerar Relatório</span>
                     </Button>
                   </div>
                 ))}
@@ -290,54 +291,65 @@ export default function RelatoriosPage() {
               </Button>
             </div>
 
-            <div className="border rounded-lg">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Relatório</TableHead>
-                    <TableHead>Período</TableHead>
-                    <TableHead>Registros</TableHead>
-                    <TableHead>Tamanho</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Gerado em</TableHead>
-                    <TableHead className="w-[100px]">Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
+            <div className="border rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[200px]">Relatório</TableHead>
+                      <TableHead className="hidden sm:table-cell">Período</TableHead>
+                      <TableHead className="hidden lg:table-cell">Registros</TableHead>
+                      <TableHead className="hidden lg:table-cell">Tamanho</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="hidden xl:table-cell">Gerado em</TableHead>
+                      <TableHead className="w-[80px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
                 <TableBody>
                   {filteredReports.map((report) => (
                     <TableRow key={report.id}>
-                      <TableCell>
+                      <TableCell className="min-w-[200px]">
                         <div className="flex items-center gap-3">
                           {getTypeIcon(report.type)}
-                          <div>
-                            <div className="font-medium">{report.name}</div>
+                          <div className="min-w-0 flex-1">
+                            <div className="font-medium truncate">{report.name}</div>
                             <div className="text-sm text-gray-500">{report.type}</div>
+                            <div className="sm:hidden mt-1">
+                              <div className="text-xs text-gray-400">{report.period}</div>
+                              <div className="lg:hidden text-xs text-gray-400 mt-1">
+                                {report.records.toLocaleString()} registros • {report.size}
+                              </div>
+                              <div className="xl:hidden text-xs text-gray-400 mt-1">
+                                {report.generated}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="text-sm">{report.period}</TableCell>
-                      <TableCell>{report.records.toLocaleString()}</TableCell>
-                      <TableCell>{report.size}</TableCell>
+                      <TableCell className="hidden sm:table-cell text-sm">{report.period}</TableCell>
+                      <TableCell className="hidden lg:table-cell">{report.records.toLocaleString()}</TableCell>
+                      <TableCell className="hidden lg:table-cell">{report.size}</TableCell>
                       <TableCell>
                         {getStatusBadge(report.status)}
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="hidden xl:table-cell text-sm text-gray-500">
                         {report.generated}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <Eye className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm" disabled={report.status !== 'Concluído'}>
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0" disabled={report.status !== 'Concluído'}>
                             <Download className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
-              </Table>
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </CardContent>
         </Card>

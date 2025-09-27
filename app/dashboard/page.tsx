@@ -111,17 +111,17 @@ export default function DashboardPage() {
             <CardContent>
               <div className="space-y-4">
                 {mockData.recentAccess.map((access) => (
-                  <div key={access.id} className="flex items-center justify-between border-b pb-2 last:border-b-0">
+                  <div key={access.id} className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-3 last:border-b-0 space-y-2 sm:space-y-0">
                     <div className="flex items-center space-x-3">
-                      <div className={`w-2 h-2 rounded-full ${
+                      <div className={`w-2 h-2 rounded-full flex-shrink-0 ${
                         access.status === 'allowed' ? 'bg-green-500' : 'bg-red-500'
                       }`}></div>
-                      <div>
-                        <p className="font-medium text-sm">{access.user}</p>
-                        <p className="text-xs text-gray-500">{access.location}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-medium text-sm truncate">{access.user}</p>
+                        <p className="text-xs text-gray-500 truncate">{access.location}</p>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex-shrink-0 sm:ml-4">
                       <p className="text-sm">{access.time}</p>
                       <p className={`text-xs ${
                         access.status === 'allowed' ? 'text-green-600' : 'text-red-600'
@@ -144,8 +144,8 @@ export default function DashboardPage() {
             <CardContent>
               <div className="space-y-4">
                 {mockData.alerts.map((alert) => (
-                  <div key={alert.id} className="flex items-start space-x-3 border-b pb-3 last:border-b-0">
-                    <div className={`w-2 h-2 rounded-full mt-2 ${
+                  <div key={alert.id} className="flex flex-col sm:flex-row sm:items-start space-y-2 sm:space-y-0 sm:space-x-3 border-b pb-3 last:border-b-0">
+                    <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
                       alert.severity === 'high' ? 'bg-red-500' : 
                       alert.severity === 'medium' ? 'bg-yellow-500' : 'bg-blue-500'
                     }`}></div>
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                       <p className="text-sm font-medium text-gray-900">{alert.message}</p>
                       <p className="text-xs text-gray-500 mt-1">{alert.time}</p>
                     </div>
-                    <button className="text-xs text-blue-600 hover:text-blue-800">
+                    <button className="text-xs text-blue-600 hover:text-blue-800 self-start sm:mt-2">
                       Resolver
                     </button>
                   </div>
@@ -170,7 +170,7 @@ export default function DashboardPage() {
             <CardDescription>Monitoramento em tempo real dos pontos de acesso</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {[
                 { name: 'Portaria Principal', status: 'online', type: 'catraca' },
                 { name: 'Entrada Lateral', status: 'online', type: 'catraca' },

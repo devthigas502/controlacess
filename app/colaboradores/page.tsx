@@ -193,31 +193,41 @@ export default function ColaboradoresPage() {
               </Button>
             </div>
 
-            <div className="border rounded-lg">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Colaborador</TableHead>
-                    <TableHead>Departamento</TableHead>
-                    <TableHead>Função</TableHead>
-                    <TableHead>Nível de Acesso</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Último Acesso</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
+            <div className="border rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[200px]">Colaborador</TableHead>
+                      <TableHead className="hidden sm:table-cell">Departamento</TableHead>
+                      <TableHead className="hidden md:table-cell">Função</TableHead>
+                      <TableHead className="hidden lg:table-cell">Nível de Acesso</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="hidden xl:table-cell">Último Acesso</TableHead>
+                      <TableHead className="w-[80px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
                 <TableBody>
                   {filteredColaboradores.map((colaborador) => (
                     <TableRow key={colaborador.id}>
-                      <TableCell>
+                      <TableCell className="min-w-[200px]">
                         <div>
                           <div className="font-medium">{colaborador.name}</div>
-                          <div className="text-sm text-gray-500">{colaborador.email}</div>
+                          <div className="text-sm text-gray-500 truncate">{colaborador.email}</div>
+                          <div className="sm:hidden text-xs text-gray-400 mt-1">
+                            {colaborador.department} • {colaborador.role}
+                          </div>
+                          <div className="md:hidden lg:flex lg:items-center lg:gap-2 mt-1">
+                            <div className="lg:hidden flex items-center gap-1">
+                              {getAccessLevelIcon(colaborador.accessLevel)}
+                              <span className="text-xs">{colaborador.accessLevel}</span>
+                            </div>
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell>{colaborador.department}</TableCell>
-                      <TableCell>{colaborador.role}</TableCell>
-                      <TableCell>
+                      <TableCell className="hidden sm:table-cell">{colaborador.department}</TableCell>
+                      <TableCell className="hidden md:table-cell">{colaborador.role}</TableCell>
+                      <TableCell className="hidden lg:table-cell">
                         <div className="flex items-center gap-2">
                           {getAccessLevelIcon(colaborador.accessLevel)}
                           <span className="text-sm">{colaborador.accessLevel}</span>
@@ -226,26 +236,27 @@ export default function ColaboradoresPage() {
                       <TableCell>
                         {getStatusBadge(colaborador.status)}
                       </TableCell>
-                      <TableCell className="text-sm text-gray-500">
+                      <TableCell className="hidden xl:table-cell text-sm text-gray-500">
                         {colaborador.lastAccess}
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="sm">
+                        <div className="flex items-center gap-1">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hidden sm:inline-flex">
                             <Trash2 className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
-              </Table>
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </CardContent>
         </Card>

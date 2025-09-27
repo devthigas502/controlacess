@@ -12,6 +12,7 @@ interface DashboardLayoutProps {
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -38,11 +39,30 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="flex">
-        <Sidebar className="fixed inset-y-0 left-0 z-50" />
-        <div className="pl-64 flex-1">
-          <Navbar className="fixed top-0 right-0 left-64 z-40" />
-          <main className="pt-16">
+      <div className="flex h-screen overflow-hidden">
+        {/* Sidebar Desktop */}
+        <Sidebar className="hidden lg:flex lg:flex-shrink-0" />
+        
+        {/* Sidebar Mobile */}
+        {sidebarOpen && (
+          <div className="fixed inset-0 z-40 lg:hidden">
+            <div 
+              className="fixed inset-0 bg-gray-600 bg-opacity-75" 
+              onClick={() => setSidebarOpen(false)}
+            />
+            <div className="relative flex flex-col w-64 bg-white h-full">
+              <Sidebar onClose={() => setSidebarOpen(false)} />
+            </div>
+          </div>
+        )}
+
+        {/* Main content */}
+        <div className="flex flex-col w-0 flex-1 overflow-hidden">
+          <Navbar 
+            onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
+            className="relative z-10 flex-shrink-0"
+          />
+          <main className="flex-1 relative overflow-y-auto focus:outline-none">
             <div className="py-6">
               <div className="px-4 sm:px-6 lg:px-8">
                 {children}

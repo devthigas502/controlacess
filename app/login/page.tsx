@@ -42,16 +42,16 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-6 px-4 sm:py-12 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <div className="flex justify-center">
             <Shield className="h-16 w-16 text-blue-600" />
           </div>
-          <h1 className="mt-6 text-3xl font-bold text-gray-900">
+          <h1 className="mt-4 sm:mt-6 text-2xl sm:text-3xl font-bold text-gray-900">
             ControlAcess
           </h1>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-gray-600 px-2 sm:px-0">
             Controle Inteligente e Seguro de Acessos
           </p>
         </div>

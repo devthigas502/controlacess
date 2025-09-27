@@ -207,66 +207,84 @@ export default function PrestadoresPage() {
               </Button>
             </div>
 
-            <div className="border rounded-lg">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Prestador</TableHead>
-                    <TableHead>Empresa</TableHead>
-                    <TableHead>Serviço</TableHead>
-                    <TableHead>Supervisor</TableHead>
-                    <TableHead>Período do Contrato</TableHead>
-                    <TableHead>Nível de Acesso</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="w-[50px]"></TableHead>
-                  </TableRow>
-                </TableHeader>
+            <div className="border rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[200px]">Prestador</TableHead>
+                      <TableHead className="hidden sm:table-cell min-w-[150px]">Empresa</TableHead>
+                      <TableHead className="hidden md:table-cell">Serviço</TableHead>
+                      <TableHead className="hidden lg:table-cell">Supervisor</TableHead>
+                      <TableHead className="hidden xl:table-cell min-w-[180px]">Período</TableHead>
+                      <TableHead className="hidden lg:table-cell">Nível</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead className="w-[80px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
                 <TableBody>
                   {filteredPrestadores.map((prestador) => (
                     <TableRow key={prestador.id}>
-                      <TableCell>
+                      <TableCell className="min-w-[200px]">
                         <div>
                           <div className="font-medium">{prestador.name}</div>
                           <div className="text-sm text-gray-500">Crachá: {prestador.badgeNumber}</div>
+                          <div className="sm:hidden mt-1">
+                            <div className="flex items-center gap-1 text-xs text-gray-400">
+                              <Building className="h-3 w-3" />
+                              <span className="truncate">{prestador.company}</span>
+                            </div>
+                            <div className="text-xs text-gray-400 mt-1 truncate">
+                              {prestador.service}
+                            </div>
+                            <div className="lg:hidden mt-1">
+                              {getAccessLevelBadge(prestador.accessLevel)}
+                            </div>
+                            <div className="xl:hidden text-xs text-gray-400 mt-1">
+                              <Calendar className="h-3 w-3 inline mr-1" />
+                              <span className="text-xs">{prestador.contractPeriod}</span>
+                            </div>
+                          </div>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="hidden sm:table-cell min-w-[150px]">
                         <div className="flex items-center gap-2">
-                          <Building className="h-4 w-4 text-gray-400" />
-                          <span>{prestador.company}</span>
+                          <Building className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                          <span className="truncate">{prestador.company}</span>
                         </div>
                       </TableCell>
-                      <TableCell>{prestador.service}</TableCell>
-                      <TableCell>{prestador.supervisor}</TableCell>
-                      <TableCell>
+                      <TableCell className="hidden md:table-cell truncate max-w-[120px]">{prestador.service}</TableCell>
+                      <TableCell className="hidden lg:table-cell">{prestador.supervisor}</TableCell>
+                      <TableCell className="hidden xl:table-cell min-w-[180px]">
                         <div className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-gray-400" />
+                          <Calendar className="h-4 w-4 text-gray-400 flex-shrink-0" />
                           <span className="text-sm">{prestador.contractPeriod}</span>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="hidden lg:table-cell">
                         {getAccessLevelBadge(prestador.accessLevel)}
                       </TableCell>
                       <TableCell>
                         {getStatusBadge(prestador.status)}
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
-                          <Button variant="ghost" size="sm">
+                        <div className="flex items-center gap-1">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <Edit className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hidden sm:inline-flex">
                             <Trash2 className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="sm">
+                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </div>
                       </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
-              </Table>
+                  </TableBody>
+                </Table>
+              </div>
             </div>
           </CardContent>
         </Card>
