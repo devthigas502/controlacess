@@ -14,7 +14,12 @@ import {
   Edit,
   Trash2,
   Building,
-  Calendar
+  Calendar,
+  Upload,
+  X,
+  Save,
+  AlertTriangle,
+  CheckCircle
 } from 'lucide-react'
 
 // Mock data para prestadores
@@ -28,7 +33,9 @@ const mockPrestadores = [
     supervisor: 'João Silva',
     accessLevel: 'Temporário',
     status: 'Ativo',
-    badgeNumber: 'P001'
+    badgeNumber: 'P001',
+    asoExpiryDate: '2024-12-15',
+    asoCertificate: null
   },
   {
     id: 2,
@@ -39,7 +46,9 @@ const mockPrestadores = [
     supervisor: 'Maria Santos',
     accessLevel: 'Diário',
     status: 'Ativo',
-    badgeNumber: 'P002'
+    badgeNumber: 'P002',
+    asoExpiryDate: '2024-10-20',
+    asoCertificate: null
   },
   {
     id: 3,
@@ -50,7 +59,9 @@ const mockPrestadores = [
     supervisor: 'Pedro Costa',
     accessLevel: 'Semanal',
     status: 'Ativo',
-    badgeNumber: 'P003'
+    badgeNumber: 'P003',
+    asoExpiryDate: '2028-09-30',
+    asoCertificate: null
   },
   {
     id: 4,
@@ -61,7 +72,9 @@ const mockPrestadores = [
     supervisor: 'Ana Oliveira',
     accessLevel: 'Temporário',
     status: 'Inativo',
-    badgeNumber: 'P004'
+    badgeNumber: 'P004',
+    asoExpiryDate: '2024-08-15',
+    asoCertificate: null
   },
   {
     id: 5,
@@ -72,13 +85,27 @@ const mockPrestadores = [
     supervisor: 'Carlos Lima',
     accessLevel: 'Permanente',
     status: 'Ativo',
-    badgeNumber: 'P005'
+    badgeNumber: 'P005',
+    asoExpiryDate: '2026-01-15',
+    asoCertificate: null
   }
 ]
 
 export default function PrestadoresPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredPrestadores, setFilteredPrestadores] = useState(mockPrestadores)
+  const [showCreateModal, setShowCreateModal] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    service: '',
+    contractPeriod: '',
+    supervisor: '',
+    accessLevel: 'Temporário',
+    badgeNumber: '',
+    asoExpiryDate: '',
+    asoCertificate: null as File | null
+  })
 
   const handleSearch = (term: string) => {
     setSearchTerm(term)
@@ -88,6 +115,84 @@ export default function PrestadoresPage() {
       prestador.service.toLowerCase().includes(term.toLowerCase())
     )
     setFilteredPrestadores(filtered)
+  }
+
+  const isAsoExpired = (expiryDate: string) => {
+    const today = new Date()
+    const expiry = new Date(expiryDate)
+    return expiry < today
+  }
+
+  const getAsoStatusBadge = (expiryDate: string) => {
+    const expired = isAsoExpired(expiryDate)
+    return (
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+        expired
+          ? 'bg-red-100 text-red-800'
+          : 'bg-green-100 text-green-800'
+      }`}>
+        {expired ? (
+          <>
+            <AlertTriangle className="h-3 w-3 mr-1" />
+            Vencido
+          </>
+        ) : (
+          <>
+            <CheckCircle className="h-3 w-3 mr-1" />
+            Válido
+          </>
+        )}
+      </span>
+    )
+  }
+
+  const openCreateModal = () => {
+    setFormData({
+      name: '',
+      company: '',
+      service: '',
+      contractPeriod: '',
+      supervisor: '',
+      accessLevel: 'Temporário',
+      badgeNumber: '',
+      asoExpiryDate: '',
+      asoCertificate: null
+    })
+    setShowCreateModal(true)
+  }
+
+  const closeCreateModal = () => {
+    setShowCreateModal(false)
+    setFormData({
+      name: '',
+      company: '',
+      service: '',
+      contractPeriod: '',
+      supervisor: '',
+      accessLevel: 'Temporário',
+      badgeNumber: '',
+      asoExpiryDate: '',
+      asoCertificate: null
+    })
+  }
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setFormData(prev => ({ ...prev, asoCertificate: file }))
+    }
+  }
+
+  const handleSavePrestador = () => {
+    if (!formData.name || !formData.company || !formData.asoExpiryDate) {
+      alert('Por favor, preencha todos os campos obrigatórios.')
+      return
+    }
+
+    // Aqui seria feita a chamada para a API para salvar o prestador
+    // Por enquanto, apenas simulamos o cadastro
+    alert(`Prestador ${formData.name} cadastrado com sucesso!`)
+    closeCreateModal()
   }
 
   const getStatusBadge = (status: string) => {
@@ -133,7 +238,10 @@ export default function PrestadoresPage() {
             <h1 className="text-2xl font-bold text-gray-900">Prestadores de Serviço</h1>
             <p className="text-gray-600">Gestão de prestadores e contratos de serviço</p>
           </div>
-          <Button className="flex items-center gap-2">
+          <Button 
+            className="flex items-center gap-2"
+            onClick={openCreateModal}
+          >
             <Briefcase className="h-4 w-4" />
             Novo Prestador
           </Button>
@@ -218,6 +326,7 @@ export default function PrestadoresPage() {
                       <TableHead className="hidden lg:table-cell">Supervisor</TableHead>
                       <TableHead className="hidden xl:table-cell min-w-[180px]">Período</TableHead>
                       <TableHead className="hidden lg:table-cell">Nível</TableHead>
+                      <TableHead className="hidden md:table-cell">ASO</TableHead>
                       <TableHead>Status</TableHead>
                       <TableHead className="w-[80px]">Ações</TableHead>
                     </TableRow>
@@ -264,6 +373,9 @@ export default function PrestadoresPage() {
                       <TableCell className="hidden lg:table-cell">
                         {getAccessLevelBadge(prestador.accessLevel)}
                       </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        {getAsoStatusBadge(prestador.asoExpiryDate)}
+                      </TableCell>
                       <TableCell>
                         {getStatusBadge(prestador.status)}
                       </TableCell>
@@ -288,6 +400,191 @@ export default function PrestadoresPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Modal de Cadastro de Prestador */}
+        {showCreateModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between p-6 border-b">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Cadastrar Novo Prestador
+                </h3>
+                <button
+                  onClick={closeCreateModal}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+
+              <div className="p-6 space-y-6">
+                {/* Informações Básicas */}
+                <div className="space-y-4">
+                  <h4 className="text-md font-medium text-gray-900">Informações Básicas</h4>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Nome Completo *
+                      </label>
+                      <Input
+                        value={formData.name}
+                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                        placeholder="Digite o nome completo"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Empresa *
+                      </label>
+                      <Input
+                        value={formData.company}
+                        onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
+                        placeholder="Nome da empresa"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Serviço Prestado
+                      </label>
+                      <Input
+                        value={formData.service}
+                        onChange={(e) => setFormData(prev => ({ ...prev, service: e.target.value }))}
+                        placeholder="Ex: Manutenção Elétrica"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Supervisor
+                      </label>
+                      <Input
+                        value={formData.supervisor}
+                        onChange={(e) => setFormData(prev => ({ ...prev, supervisor: e.target.value }))}
+                        placeholder="Nome do supervisor"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Período do Contrato
+                      </label>
+                      <Input
+                        value={formData.contractPeriod}
+                        onChange={(e) => setFormData(prev => ({ ...prev, contractPeriod: e.target.value }))}
+                        placeholder="Ex: 2024-09-01 até 2024-12-31"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Nível de Acesso
+                      </label>
+                      <select
+                        value={formData.accessLevel}
+                        onChange={(e) => setFormData(prev => ({ ...prev, accessLevel: e.target.value }))}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        <option value="Permanente">Permanente</option>
+                        <option value="Temporário">Temporário</option>
+                        <option value="Diário">Diário</option>
+                        <option value="Semanal">Semanal</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Número do Crachá
+                      </label>
+                      <Input
+                        value={formData.badgeNumber}
+                        onChange={(e) => setFormData(prev => ({ ...prev, badgeNumber: e.target.value }))}
+                        placeholder="Ex: P001"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Informações de Saúde Ocupacional */}
+                <div className="space-y-4 border-t pt-6">
+                  <h4 className="text-md font-medium text-gray-900">Atestado de Saúde Ocupacional (ASO)</h4>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Data de Vencimento do ASO *
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.asoExpiryDate}
+                        onChange={(e) => setFormData(prev => ({ ...prev, asoExpiryDate: e.target.value }))}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Upload do Atestado
+                      </label>
+                      <div className="relative">
+                        <input
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          onChange={handleFileUpload}
+                          className="hidden"
+                          id="aso-certificate"
+                        />
+                        <label
+                          htmlFor="aso-certificate"
+                          className="flex items-center justify-center w-full px-4 py-2 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:border-gray-400 transition-colors"
+                        >
+                          <div className="flex items-center gap-2">
+                            <Upload className="h-5 w-5 text-gray-400" />
+                            <span className="text-sm text-gray-600">
+                              {formData.asoCertificate ? formData.asoCertificate.name : 'Selecionar arquivo'}
+                            </span>
+                          </div>
+                        </label>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-1">
+                        Formatos aceitos: PDF, JPG, PNG. Máx. 10MB
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {formData.asoExpiryDate && (
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <div className="flex items-center gap-2 text-blue-800">
+                      <Calendar className="h-4 w-4" />
+                      <span className="text-sm font-medium">Status do ASO:</span>
+                    </div>
+                    <p className="text-sm text-blue-700 mt-1">
+                      {isAsoExpired(formData.asoExpiryDate) ? 'Vencido' : 'Válido'} até {new Date(formData.asoExpiryDate).toLocaleDateString('pt-BR')}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50">
+                <Button
+                  variant="outline"
+                  onClick={closeCreateModal}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  onClick={handleSavePrestador}
+                  disabled={!formData.name || !formData.company || !formData.asoExpiryDate}
+                  className="flex items-center gap-2"
+                >
+                  <Save className="h-4 w-4" />
+                  Salvar Prestador
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </DashboardLayout>
   )
